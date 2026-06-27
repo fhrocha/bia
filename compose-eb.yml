@@ -1,0 +1,6 @@
+services:
+  bia:
+    platform: linux/amd64
+    image: 305068201474.dkr.ecr.us-east-1.amazonaws.com/ecr-bia:${TAG}
+    ports:
+      - 80:8080

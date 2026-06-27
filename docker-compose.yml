@@ -1,0 +1,15 @@
+services:
+  bia:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BIA_API_URL: http://bia-dev.us-east-1.elasticbeanstalk.com
+    image: 305068201474.dkr.ecr.us-east-1.amazonaws.com/ecr-bia:be0857c
+    platform: linux/amd64
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "80"
+        protocol: tcp
