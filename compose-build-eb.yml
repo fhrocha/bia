@@ -6,6 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        BIA_API_URL: http://bia-dev.us-east-1.elasticbeanstalk.com 
+        BIA_API_URL: http://bia-dev-web.us-east-1.elasticbeanstalk.com 
     ports:
       - 80:8080

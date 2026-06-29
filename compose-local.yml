@@ -1,0 +1,12 @@
+#docker compose -f compose-local.yml up -d
+services:
+  bia:
+    platform: linux/amd64
+    image: bia-local:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BIA_API_URL: http://localhost 
+    ports:
+      - 3001:8080
