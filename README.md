@@ -9,4 +9,4 @@
 docker compose exec server bash -c 'npx sequelize db:migrate'
 ```
 
-Hello world !!! 
+Hello world !!! Last?
