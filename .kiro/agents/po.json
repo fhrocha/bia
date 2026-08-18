@@ -12,9 +12,9 @@
   "resources": [
     "file://AmazonQ.md",
     "file://README.md",
-    "file://.kiro/po/**/*.md",ß
+    "file://.kiro/po/**/*.md",
     "file://.kiro/rules/**/*.md"
   ],
-  "allowedTools": [ "write"],
+  "allowedTools": [ "fs_read", "fs_write"],
   "model": null
 }
