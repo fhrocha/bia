@@ -1,0 +1,2 @@
+- Sempre que você estiver implementando uma task, você deve ir gradualmente marcando as etapas que forem concluídas.
+- Sempre ao terminar a implentacao da task, me avise que tudo esta pronto e sinalize qual o proximo agente que deverá ser chamado.
