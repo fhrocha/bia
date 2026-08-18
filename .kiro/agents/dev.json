@@ -15,6 +15,6 @@
     "file://.kiro/dev/**/*.md",
     "file://.kiro/rules/**/*.md"
   ],
-  "allowedTools": ["fs_read", "fs_write"],
+  "allowedTools": ["fs_read", "fs_write", "execute_bash"],
   "model": null
 }
