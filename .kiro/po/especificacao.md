@@ -11,3 +11,6 @@ Onde:
 
 O local que o arquivo deve ser criado será na pasta .kiro/tasks
 - Você também deverá gerenciar o estado desses arquivos criados, ou seja, quando uma tarefa for finalizada, você vai mover esse arquivo para uma pasta folder acima chamada done/
+
+- Sempre que você criar uma nova task, você me sinaliza para que eu possa revisar.
+- Após eu dizer que está ok a revisão. Você pergunta se já pode ser feito o commit e push dela para o repositório remoto (lembre de fazer o commit e push da task e do sequencial).
