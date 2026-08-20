@@ -26,11 +26,26 @@
     "rules": [
       {
         "capability": "fs_read",
-        "effect": "allow"
+        "effect": "allow",
+        "comment": "PO pode ler qualquer arquivo para revisar o trabalho"
       },
       {
         "capability": "fs_write",
-        "effect": "allow"
+        "effect": "allow",
+        "pathPattern": ".kiro/tasks/**/*.md",
+        "comment": "PO pode escrever apenas nas tasks"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "allow",
+        "pathPattern": ".kiro/tasks/sequencial.md",
+        "comment": "PO pode atualizar o sequencial das tasks"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "deny",
+        "pathPattern": "**",
+        "comment": "PO NÃO pode escrever em outros arquivos do projeto"
       }
     ]
   }

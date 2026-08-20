@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "PO Write Restriction",
+      "trigger": "PreToolUse",
+      "description": "Restringe operações de escrita do agente PO apenas à pasta .kiro",
+      "matcher": "(fs_write|fs_append|str_replace|delete_file|execute_bash)",
+      "action": {
+        "type": "command",
+        "command": "#!/bin/bash\n\n# Lê o contexto JSON do stdin\ninput=$(cat)\n\n# Extrai o agentId e o toolName\nagent_id=$(echo \"$input\" | jq -r '.agentId // \"unknown\"')\ntool_name=$(echo \"$input\" | jq -r '.toolName // \"\"')\n\n# Se não for o agente PO, permite\nif [[ \"$agent_id\" != \"po\" ]]; then\n  exit 0\nfi\n\n# Bloqueia execute_bash completamente para o PO\nif [[ \"$tool_name\" == \"execute_bash\" ]]; then\n  echo \"❌ Permissão negada: O agente PO não pode executar comandos shell\" >&2\n  exit 2\nfi\n\n# Extrai o caminho do arquivo sendo modificado\nfile_path=\"\"\ncase \"$tool_name\" in\n  \"fs_write\"|\"fs_append\")\n    file_path=$(echo \"$input\" | jq -r '.toolInput.path // \"\"')\n    ;;\n  \"str_replace\")\n    file_path=$(echo \"$input\" | jq -r '.toolInput.path // \"\"')\n    ;;\n  \"delete_file\")\n    file_path=$(echo \"$input\" | jq -r '.toolInput.targetFile // \"\"')\n    ;;\nesac\n\n# Se não conseguiu extrair o caminho, permite (evita falsos positivos)\nif [[ -z \"$file_path\" ]]; then\n  exit 0\nfi\n\n# Normaliza o caminho (remove ./ do início)\nfile_path=\"${file_path#./}\"\n\n# Verifica se o caminho está dentro de .kiro\nif [[ \"$file_path\" == .kiro/* ]] || [[ \"$file_path\" == \".kiro\" ]]; then\n  exit 0\nfi\n\n# Bloqueia a operação\necho \"❌ Permissão negada: O agente PO só pode escrever na pasta .kiro/\" >&2\necho \"   Caminho bloqueado: $file_path\" >&2\nexit 2\n",
+        "timeout": 5
+      }
+    }
+  ]
+}
