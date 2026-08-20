@@ -30,7 +30,74 @@ Vamos adotar o modelo feature/branch, ou seja, cada task terá o seu branch. O b
     - Uma etapa obrigatória nesse checklist é de marcar as atividades a medida que elas forem concluídas, ou seja, durante o processo de implementancão.
 - Na task precisa estar claro que sempre quem irá finalizar a task e mover ela para done seja você (po).
     - Coloque uma etapa na task, informando que quando os agentes concluirem as tarefas, precisam dizer que ela precisa ser passada para você para que possa ser encerrada.
-    - Precisa estar documentado essa etapa do que vocIe deverá fazer ao final.
+    - Precisa estar documentado essa etapa do que você deverá fazer ao final.
         - Ver se tudo foi implementado.
         - Ver se todos os itens das tasks foram marcados como check.
         - Tudo estando ok, você vai me informar que está finalizado, mover a task para done e fazer o commit e push final.
+
+# Fluxo de Pull Request (Após Finalização da Task)
+
+Após a task ser movida para done e o commit/push final ter sido realizado, você (PO) deve executar o seguinte fluxo:
+
+## 1. Validação Pré-PR
+- [ ] Verificar se a branch da feature está atualizada com bia-desafio-agosto
+- [ ] Confirmar que todos os testes estão passando
+- [ ] Validar que o código está seguindo os padrões do projeto
+- [ ] Conferir se não há conflitos com a branch base
+
+## 2. Criação do Pull Request
+- [ ] Criar PR da branch feature/* para bia-desafio-agosto usando GitHub CLI
+- [ ] Comando: `gh pr create --base bia-desafio-agosto --head <nome-da-branch> --title "<título-do-pr>" --body "<descrição>"`
+- [ ] Título do PR deve seguir o padrão: `[XXX] Tipo: Resumo da task`
+- [ ] Descrição do PR deve conter:
+  - Resumo das mudanças implementadas
+  - Referência à task (link para o arquivo da task)
+  - Checklist de validações realizadas
+  - Print/evidência de testes executados (se aplicável)
+
+## 3. Template de Descrição do PR
+```markdown
+## 📋 Descrição
+
+[Breve descrição do que foi implementado]
+
+## 🔗 Task Relacionada
+
+Task: [XXX]-[tipo]-[resumo].md
+
+## ✅ Checklist de Validação
+
+- [ ] Código implementado conforme especificação
+- [ ] Testes locais executados com sucesso
+- [ ] Sem conflitos com branch base
+- [ ] Documentação atualizada (se necessário)
+- [ ] Task movida para done/
+
+## 🧪 Evidências de Teste
+
+[Comandos executados e resultados, ou prints se aplicável]
+
+## 📝 Observações
+
+[Qualquer observação adicional relevante]
+```
+
+## 4. Aprovação e Merge
+- [ ] Aguardar aprovação (se houver processo de revisão)
+- [ ] Após aprovação, fazer merge do PR para bia-desafio-agosto
+- [ ] Comando: `gh pr merge <numero-do-pr> --squash` (ou --merge, conforme padrão do projeto)
+- [ ] Deletar a branch feature após merge (opcional, mas recomendado)
+- [ ] Comando: `git branch -d <nome-da-branch>` (local) e `git push origin --delete <nome-da-branch>` (remoto)
+
+## 5. Registro Final
+- [ ] Informar ao usuário que o PR foi criado/mergeado
+- [ ] Fornecer o link do PR para acompanhamento
+- [ ] Atualizar status da task (se houver sistema de tracking adicional)
+
+## ⚠️ Observações Importantes
+
+- Sempre use `gh pr create` para criar PRs via CLI
+- Nunca faça push direto para bia-desafio-agosto sem PR
+- Em caso de conflitos, resolva antes de criar o PR
+- Mantenha o histórico limpo usando --squash no merge quando apropriado
+- Se o PR for rejeitado, volte a task para doing/ e comunique os ajustes necessários
