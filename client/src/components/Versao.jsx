@@ -7,11 +7,9 @@ const Versao = () => {
   // 'checking' | 'online' | 'offline'
   const [status, setStatus] = useState("checking");
   const [versaoTexto, setVersaoTexto] = useState("");
-  const [erro, setErro] = useState(null);
 
   const fetchVersao = async () => {
     setStatus("checking");
-    setErro(null);
 
     try {
       const controller = new AbortController();
@@ -25,15 +23,14 @@ const Versao = () => {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        throw new Error(`HTTP ${response.status}`);
       }
 
       const texto = await response.text(); // ex: "Bia 4.3.0"
       setVersaoTexto(texto);
       setStatus("online");
-    } catch (error) {
+    } catch {
       setStatus("offline");
-      setErro(error.message || "Não foi possível conectar à API.");
     }
   };
 
@@ -44,25 +41,13 @@ const Versao = () => {
   // Separa "Bia" de "4.3.0"
   const [nomeApp, numeroVersao] = versaoTexto ? versaoTexto.split(" ") : ["—", "—"];
 
-  const statusIcone = {
-    checking: "🟡",
-    online: "🟢",
-    offline: "🔴",
-  }[status];
-
-  const statusLabel = {
-    checking: "Verificando...",
-    online: "Online",
-    offline: "Offline",
-  }[status];
-
   return (
     <div className="tasks-container">
       {/* Loading */}
       {status === "checking" && (
         <div className="task">
           <div className="task-content">
-            <h3>🟡 Verificando API...</h3>
+            <h3>🟡 Verificando...</h3>
             <p className="task-date">Aguarde um momento</p>
           </div>
         </div>
@@ -72,8 +57,8 @@ const Versao = () => {
       {status === "offline" && (
         <div className="task reminder">
           <div className="task-content">
-            <h3>🔴 API indisponível</h3>
-            <p className="task-date">{erro}</p>
+            <h3>🔴 Indisponível</h3>
+            <p className="task-date">Não foi possível carregar as informações.</p>
           </div>
           <div className="task-actions">
             <button
@@ -103,24 +88,6 @@ const Versao = () => {
             <div className="task-content">
               <h3>Versão</h3>
               <p className="task-date">{numeroVersao}</p>
-            </div>
-          </div>
-
-          {/* Status */}
-          <div className="task">
-            <div className="task-content">
-              <h3>Status da API</h3>
-              <p className="task-date">
-                {statusIcone} {statusLabel}
-              </p>
-            </div>
-          </div>
-
-          {/* URL da API */}
-          <div className="task">
-            <div className="task-content">
-              <h3>URL da API</h3>
-              <p className="task-date">{apiUrl}</p>
             </div>
           </div>
         </>
