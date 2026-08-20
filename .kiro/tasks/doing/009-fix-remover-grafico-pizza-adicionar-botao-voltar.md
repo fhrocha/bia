@@ -21,46 +21,46 @@ Esta task segue o modelo **feature/branch + worktree**:
 **dev** - Responsável pela implementação frontend
 
 ## Pré-requisitos
-- [ ] Verificar se está no branch `bia-desafio-agosto`
-- [ ] Se não estiver, perguntar se pode retornar para o branch antes de iniciar
+- [x] Verificar se está no branch `bia-desafio-agosto`
+- [x] Se não estiver, perguntar se pode retornar para o branch antes de iniciar
 
 ## Implementação
 
 ### 1. Preparação do Ambiente
-- [ ] Mover esta task para `.kiro/tasks/doing/`
-- [ ] Fazer commit e push no branch `bia-desafio-agosto`
-- [ ] Criar worktree: `git worktree add -b feature/009-fix-remover-grafico-pizza-adicionar-botao-voltar .worktrees/009-fix-analytics bia-desafio-agosto`
-- [ ] Entrar no worktree: `cd .worktrees/009-fix-analytics`
-- [ ] Confirmar branch correto: `git branch --show-current`
+- [x] Mover esta task para `.kiro/tasks/doing/`
+- [x] Fazer commit e push no branch `bia-desafio-agosto`
+- [x] Criar worktree: `git worktree add -b feature/009-fix-remover-grafico-pizza-adicionar-botao-voltar .worktrees/009-fix-analytics bia-desafio-agosto`
+- [x] Entrar no worktree: `cd .worktrees/009-fix-analytics`
+- [x] Confirmar branch correto: `git branch --show-current`
 
 ### 2. Alterações no Componente Analytics
 
 **Arquivo:** `client/src/components/Analytics.jsx`
 
 #### 2.1. Atualizar Imports
-- [ ] Remover `PieChart`, `Pie` e `Cell` das importações do recharts
-- [ ] Adicionar `useNavigate` do react-router-dom
-- [ ] Import final deve ser:
+- [x] Remover `PieChart`, `Pie` e `Cell` das importações do recharts
+- [x] Adicionar `useNavigate` do react-router-dom
+- [x] Import final deve ser:
 ```javascript
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useNavigate } from "react-router-dom";
 ```
 
 #### 2.2. Adicionar Hook de Navegação
-- [ ] Dentro do componente `Analytics`, adicionar:
+- [x] Dentro do componente `Analytics`, adicionar:
 ```javascript
 const navigate = useNavigate();
 ```
 
 #### 2.3. Remover Código do Gráfico de Pizza
-- [ ] Remover a constante `dataPie`
-- [ ] Remover a constante `COLORS`
-- [ ] Remover toda a seção `<div className="chart-wrapper">` do gráfico de pizza
-- [ ] Manter apenas o gráfico de barras
+- [x] Remover a constante `dataPie`
+- [x] Remover a constante `COLORS`
+- [x] Remover toda a seção `<div className="chart-wrapper">` do gráfico de pizza
+- [x] Manter apenas o gráfico de barras
 
 #### 2.4. Adicionar Botão Voltar
-- [ ] Adicionar botão no início do `<div className="analytics-header">`, **antes** do `<h2>`
-- [ ] Código do botão:
+- [x] Adicionar botão no início do `<div className="analytics-header">`, **antes** do `<h2>`
+- [x] Código do botão:
 ```javascript
 <button 
   onClick={() => navigate('/')} 
@@ -75,7 +75,7 @@ const navigate = useNavigate();
 
 **Arquivo:** `client/src/index.css`
 
-- [ ] Adicionar ao final do arquivo:
+- [x] Adicionar ao final do arquivo:
 ```css
 /* Botão Voltar do Analytics */
 .btn-back {
@@ -104,52 +104,52 @@ const navigate = useNavigate();
 ### 4. Testes Locais
 
 #### 4.1. Build e Execução
-- [ ] Instalar dependências (se necessário): `npm install`
-- [ ] Build do frontend: `cd client && npm run build`
-- [ ] Verificar que o build foi concluído com sucesso
-- [ ] Confirmar redução no tamanho do bundle JS (deve diminuir ~19-20 KB)
+- [x] Instalar dependências (se necessário): `npm install`
+- [x] Build do frontend: `cd client && npm run build`
+- [x] Verificar que o build foi concluído com sucesso
+- [x] Confirmar redução no tamanho do bundle JS (deve diminuir ~19-20 KB)
 
 #### 4.2. Teste com Docker Compose
-- [ ] Voltar ao diretório raiz do worktree
-- [ ] Build do Docker: `docker compose build`
-- [ ] Subir containers: `docker compose up -d`
-- [ ] Aguardar containers iniciarem
+- [x] Voltar ao diretório raiz do worktree
+- [x] Build do Docker: `docker compose build`
+- [x] Subir containers: `docker compose up -d`
+- [x] Aguardar containers iniciarem
 
 #### 4.3. Validações Funcionais
-- [ ] Acessar http://localhost:3001
-- [ ] Navegar para o Dashboard (clicar em "Dashboard" no header)
-- [ ] **Verificar:** Botão "← Voltar" está visível no topo da página
-- [ ] **Verificar:** Apenas gráfico de barras está sendo exibido
-- [ ] **Verificar:** Gráfico de pizza foi removido
-- [ ] **Testar:** Clicar no botão "← Voltar" e confirmar que retorna à home
-- [ ] **Testar:** Animação do botão ao passar o mouse (hover)
-- [ ] **Testar:** Funcionalidade em tema claro e escuro
+- [x] Acessar http://localhost:3001
+- [x] Navegar para o Dashboard (clicar em "Dashboard" no header)
+- [x] **Verificar:** Botão "← Voltar" está visível no topo da página
+- [x] **Verificar:** Apenas gráfico de barras está sendo exibido
+- [x] **Verificar:** Gráfico de pizza foi removido
+- [x] **Testar:** Clicar no botão "← Voltar" e confirmar que retorna à home
+- [x] **Testar:** Animação do botão ao passar o mouse (hover)
+- [x] **Testar:** Funcionalidade em tema claro e escuro
 
 #### 4.4. Validações Técnicas
-- [ ] Verificar console do navegador para erros
-- [ ] Confirmar que não há imports não utilizados
-- [ ] Verificar que o código está limpo (sem código comentado relacionado ao PieChart)
+- [x] Verificar console do navegador para erros
+- [x] Confirmar que não há imports não utilizados
+- [x] Verificar que o código está limpo (sem código comentado relacionado ao PieChart)
 
 ### 5. Commit e Push
-- [ ] Parar containers: `docker compose down`
-- [ ] Adicionar arquivos alterados: `git add client/src/components/Analytics.jsx client/src/index.css`
-- [ ] Commit: `git commit -m "fix: remover gráfico de pizza e adicionar botão voltar no dashboard"`
-- [ ] Push: `git push origin feature/009-fix-remover-grafico-pizza-adicionar-botao-voltar`
+- [x] Parar containers: `docker compose down`
+- [x] Adicionar arquivos alterados: `git add client/src/components/Analytics.jsx client/src/index.css`
+- [x] Commit: `git commit -m "fix: remover gráfico de pizza e adicionar botão voltar no dashboard"`
+- [x] Push: `git push origin feature/009-fix-remover-grafico-pizza-adicionar-botao-voltar`
 
 ### 6. Informar Conclusão
-- [ ] Informar ao PO que a task está concluída e pronta para revisão
-- [ ] Mencionar que todos os testes foram executados com sucesso
-- [ ] Aguardar PO para criação do PR e finalização
+- [x] Informar ao PO que a task está concluída e pronta para revisão
+- [x] Mencionar que todos os testes foram executados com sucesso
+- [x] Aguardar PO para criação do PR e finalização
 
 ## Critérios de Aceite
-- [ ] Gráfico de pizza completamente removido do código e da interface
-- [ ] Botão "← Voltar" visível e funcional no topo da página Analytics
-- [ ] Botão redireciona corretamente para a home (`/`)
-- [ ] Estilo do botão está consistente com o design da aplicação
-- [ ] Animações do botão funcionando corretamente
-- [ ] Sem erros no console do navegador
-- [ ] Build do frontend reduzido em tamanho (~19-20 KB)
-- [ ] Funcionalidade testada em tema claro e escuro
+- [x] Gráfico de pizza completamente removido do código e da interface
+- [x] Botão "← Voltar" visível e funcional no topo da página Analytics
+- [x] Botão redireciona corretamente para a home (`/`)
+- [x] Estilo do botão está consistente com o design da aplicação
+- [x] Animações do botão funcionando corretamente
+- [x] Sem erros no console do navegador
+- [x] Build do frontend reduzido em tamanho (~19-20 KB)
+- [x] Funcionalidade testada em tema claro e escuro
 
 ## Observações Técnicas
 - O `useNavigate` é a forma recomendada no React Router v6 para navegação programática
@@ -168,3 +168,4 @@ Após a implementação ser concluída pelo agente **dev**, o PO deverá:
 - [ ] Mover task para `.kiro/tasks/done/`
 - [ ] Fazer commit e push final da movimentação da task
 - [ ] Informar ao usuário que a task foi finalizada com sucesso
+
