@@ -45,16 +45,16 @@ Atualmente, o projeto possui 16 testes unitários (Jest) que validam os controll
 
 ## Critérios de Aceite
 
-- [ ] Workflow do GitHub Actions criado em `.github/workflows/`
-- [ ] Workflow deve ser acionado nos eventos:
+- [x] Workflow do GitHub Actions criado em `.github/workflows/`
+- [x] Workflow deve ser acionado nos eventos:
   - `pull_request` (opened, synchronize, reopened) contra `bia-desafio-agosto`
   - Opcionalmente: `push` para branches `feature/*` (para feedback mais rápido)
-- [ ] Workflow deve instalar dependências do Node.js
-- [ ] Workflow deve executar `npm test`
-- [ ] Workflow deve falhar se algum teste falhar
-- [ ] Status do workflow deve aparecer no Pull Request
-- [ ] Workflow deve usar Node.js versão 18.x ou superior
-- [ ] Logs dos testes devem estar visíveis no GitHub Actions
+- [x] Workflow deve instalar dependências do Node.js
+- [x] Workflow deve executar `npm test`
+- [x] Workflow deve falhar se algum teste falhar
+- [x] Status do workflow deve aparecer no Pull Request
+- [x] Workflow deve usar Node.js versão 18.x ou superior
+- [x] Logs dos testes devem estar visíveis no GitHub Actions
 
 ## Arquivos a Criar
 
@@ -132,25 +132,25 @@ Após implementação, validar que:
 
 > Marque cada item à medida que for concluído durante a implementação.
 
-- [ ] Verificar branch atual — confirmar que está em `bia-desafio-agosto`
-- [ ] Mover este arquivo para `.kiro/tasks/doing/`
-- [ ] Fazer commit e push no branch `bia-desafio-agosto`
-- [ ] Criar o branch `feature/005-feat-github-actions-testes-pr` a partir de `bia-desafio-agosto`
-- [ ] Criar diretório `.github/workflows/` na raiz do projeto
-- [ ] Criar arquivo `test-pr.yml` com configuração do workflow
-- [ ] Configurar triggers: `pull_request` para branch `bia-desafio-agosto`
-- [ ] Configurar job com Node.js 18.x
-- [ ] Adicionar step de checkout do código
-- [ ] Adicionar step de setup do Node.js
-- [ ] Adicionar step para instalar dependências (`npm ci`)
-- [ ] Adicionar step para executar testes (`npm test`)
-- [ ] Testar o workflow localmente se possível (com `act` ou similar)
-- [ ] Fazer commit das alterações
-- [ ] Push do branch `feature/005-feat-github-actions-testes-pr`
-- [ ] Criar um PR de teste para validar o workflow
-- [ ] Verificar que o workflow foi executado e passou
-- [ ] Capturar evidências (screenshots ou logs)
-- [ ] Informar ao `po` que a task está pronta para encerramento
+- [x] Verificar branch atual — confirmar que está em `bia-desafio-agosto`
+- [x] Mover este arquivo para `.kiro/tasks/doing/`
+- [x] Fazer commit e push no branch `bia-desafio-agosto`
+- [x] Criar o branch `feature/005-feat-github-actions-testes-pr` a partir de `bia-desafio-agosto`
+- [x] Criar diretório `.github/workflows/` na raiz do projeto
+- [x] Criar arquivo `test-pr.yml` com configuração do workflow
+- [x] Configurar triggers: `pull_request` para branch `bia-desafio-agosto`
+- [x] Configurar job com Node.js 18.x
+- [x] Adicionar step de checkout do código
+- [x] Adicionar step de setup do Node.js
+- [x] Adicionar step para instalar dependências (`npm ci`)
+- [x] Adicionar step para executar testes (`npm test`)
+- [x] Testar o workflow localmente se possível (com `act` ou similar) — ✅ Testado via push no branch
+- [x] Fazer commit das alterações
+- [x] Push do branch `feature/005-feat-github-actions-testes-pr`
+- [x] Criar um PR de teste para validar o workflow — ✅ PR #2 criado
+- [x] Verificar que o workflow foi executado e passou — ✅ Executado com sucesso em Node.js 18.x e 20.x
+- [x] Capturar evidências (screenshots ou logs) — ✅ Logs capturados via gh run view
+- [x] Informar ao `po` que a task está pronta para encerramento
 
 ---
 
@@ -170,3 +170,55 @@ Quando o agente `devops` concluir e sinalizar a finalização, o `po` deve:
   - [ ] Criação do Pull Request
   - [ ] Aprovação e Merge
   - [ ] Registro Final
+
+
+
+---
+
+## Evidências da Execução
+
+### Pull Request Criado
+- **URL:** https://github.com/fhrocha/bia/pull/2
+- **Estado:** OPEN
+- **Branch:** `feature/005-feat-github-actions-testes-pr` → `bia-desafio-agosto`
+
+### Workflows Executados com Sucesso
+
+#### Execução em Pull Request (Run ID: 32376635322)
+- **Trigger:** pull_request
+- **Status:** ✅ SUCCESS
+- **Jobs executados:**
+  - ✅ Executar Testes Unitários (Node.js 18.x) - 25 segundos
+  - ✅ Executar Testes Unitários (Node.js 20.x) - 32 segundos
+
+#### Resultado dos Testes
+```
+Test Suites: 2 passed, 2 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        0.811 s
+Ran all test suites matching /tests\/unit/i.
+```
+
+### Status Checks no Pull Request
+Todos os checks aparecem no PR com status SUCCESS:
+- ✅ Executar Testes Unitários (18.x)
+- ✅ Executar Testes Unitários (20.x)
+
+### Logs da Execução
+- Logs completos capturados via `gh run view 32376635322 --log`
+- Instalação de 679 packages em ~20s
+- Execução de 16 testes unitários com 100% de sucesso
+- Cache do npm funcionando corretamente
+
+---
+
+## Conclusão - Pronto para Aceite pelo PO
+
+Todos os critérios de aceite foram atendidos:
+- ✅ Workflow criado e funcional
+- ✅ Triggers configurados corretamente (pull_request + push)
+- ✅ Testes executam em Node.js 18.x e 20.x
+- ✅ Status checks aparecem no PR
+- ✅ Logs visíveis no GitHub Actions
+- ✅ Workflow falha caso testes falhem (comportamento padrão do npm test)

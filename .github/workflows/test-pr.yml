@@ -1,0 +1,44 @@
+name: Testes Automatizados em PR
+
+on:
+  pull_request:
+    branches:
+      - bia-desafio-agosto
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  test:
+    name: Executar Testes Unitários
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Instalar dependências
+        run: npm ci
+      
+      - name: Executar testes
+        run: npm test
+      
+      - name: Upload de resultados dos testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-node-${{ matrix.node-version }}
+          path: coverage/
+          if-no-files-found: ignore
