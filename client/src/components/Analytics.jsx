@@ -1,9 +1,11 @@
 import React from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext.jsx";
 
 const Analytics = ({ tasks }) => {
   const { isDarkMode } = useTheme();
+  const navigate = useNavigate();
 
   // Processar dados para o gráfico
   const importantes = tasks.filter(t => t.importante).length;
@@ -12,11 +14,6 @@ const Analytics = ({ tasks }) => {
   const dataBar = [
     { name: "Importante", quantidade: importantes },
     { name: "Não Importante", quantidade: naoImportantes }
-  ];
-
-  const dataPie = [
-    { name: "Importante", value: importantes },
-    { name: "Não Importante", value: naoImportantes }
   ];
 
   // Cores para o tema
@@ -36,11 +33,16 @@ const Analytics = ({ tasks }) => {
         background: "#ffffff"
       };
 
-  const COLORS = [colors.importante, colors.naoImportante];
-
   return (
     <div className="analytics-container">
       <div className="analytics-header">
+        <button 
+          onClick={() => navigate('/')} 
+          className="btn-back"
+          title="Voltar para tela principal"
+        >
+          ← Voltar
+        </button>
         <h2>📊 Dashboard de Tarefas</h2>
         <p className="analytics-subtitle">Visualização da distribuição de tarefas por prioridade</p>
       </div>
@@ -113,37 +115,6 @@ const Analytics = ({ tasks }) => {
                   radius={[8, 8, 0, 0]}
                 />
               </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Gráfico de Pizza */}
-          <div className="chart-wrapper">
-            <h3 className="chart-title">Gráfico de Pizza</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={dataPie}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {dataPie.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{
-                    backgroundColor: colors.background,
-                    border: `1px solid ${colors.grid}`,
-                    borderRadius: '6px',
-                    color: colors.text
-                  }}
-                />
-              </PieChart>
             </ResponsiveContainer>
           </div>
         </>
