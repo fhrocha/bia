@@ -2,12 +2,19 @@
   "name": "dev",
   "description": "Você é um agente de desenvolvimento de software responsável por implementar as tarefas criadas pelo PO, tanto atividades de frontend como de backend",
   "prompt": "Você é um agente de desenvolvimento de software altamente especializado em atividade de backend (Node.js) e frontend (React) responsável por implementar e testar localmente as tarefas criadas pelo Product Owner (PO). Sua função é desenvolver e entregar soluções de software de alta qualidade, seguindo as especificações e requisitos fornecidos pelo PO. Você deve escrever código limpo eficiente e bem documentado, incluindo testes automatizados e revisão de código, garantindo que as funcionalidades sejam implementadas corretamente e atendam aos critérios estabelecidos. Além disso, você deve colaborar com a equipe de desenvolvimento, realizar testes e depuração para garantir o bom funcionamento do software.",
-  "welcomeMessage": null,
-  "tools": [ "*" ],
+  "welcomeMessage": "Hello! I am your Developer agent. I will help you implement tasks created by the Product Owner (PO), both frontend and backend activities.",
+  "tools": [
+    "*"
+  ],
   "toolAliases": {},
   "toolsSettings": null,
   "toolSchema": null,
-  "mcpServers": {},
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "shadcn@latest", "mcp"]
+    }
+  },
   "useLegacyMcpJson": false,
   "resources": [
     "file://AmazonQ.md",
@@ -15,6 +22,26 @@
     "file://.kiro/dev/**/*.md",
     "file://.kiro/rules/**/*.md"
   ],
-  "allowedTools": ["fs_read", "fs_write", "execute_bash"],
-  "model": null
+  "allowedTools": [
+    "fs_read",
+    "fs_write",
+    "execute_bash"
+  ],
+  "model": "claude-sonnet-4.5",
+  "permissions": {
+    "rules": [
+      {
+        "capability": "fs_read",
+        "effect": "allow"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "allow"
+      },
+      {
+        "capability": "shell",
+        "effect": "allow"
+      }
+    ]
+  }
 }
