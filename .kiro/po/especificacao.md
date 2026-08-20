@@ -17,9 +17,9 @@ O local que o arquivo deve ser criado será na pasta .kiro/tasks
 
 # Sobre a task que vai ser criada
 - No início da task, você precisa colocar informacoes importantes sobre o nosso modelo de trabalho.
-Vamos adotar o modelo feature/branch, ou seja, cada task terá o seu branch. O branch deverá ter o nome das tasks e SEMPRE derivar do branch bia-desafio-agosto. Ao criar a task, você precisa especificar qual agent deve iniciar ela.
+Vamos adotar o modelo feature/branch + worktree, ou seja, cada task terá o seu branch E seu próprio worktree isolado. O branch deverá ter o nome das tasks e SEMPRE derivar do branch bia-desafio-agosto. Ao criar a task, você precisa especificar qual agent deve iniciar ela.
 - O agent que iniciar, deverá inicialmente verificar se estamos no branch bia-desafio-agosto. Caso não esteja, deve informar e perguntar se podemos retornar para ele, antes de iniciar a task.
-- Após ser autorizado, ele deverá mover a task para o diretório doing (.kiro/tasks/doing), fazer commit e push no branch bia-desafio-agosto e criar o branch para iniciar a implementação da task.
+- Após ser autorizado, ele deverá mover a task para o diretório doing (.kiro/tasks/doing), fazer commit e push no branch bia-desafio-agosto e criar o worktree com o branch para iniciar a implementação da task.
 - Você deverá delegar a atividade para início de um desses agentes: 
     - dev (.kiro/agents/dev.json)
     - devops (.kiro/agents/devops.json)
@@ -34,6 +34,214 @@ Vamos adotar o modelo feature/branch, ou seja, cada task terá o seu branch. O b
         - Ver se tudo foi implementado.
         - Ver se todos os itens das tasks foram marcados como check.
         - Tudo estando ok, você vai me informar que está finalizado, mover a task para done e fazer o commit e push final.
+
+---
+
+# Sistema de Worktrees (A partir da Task 007)
+
+A partir da **task 007**, todas as tasks devem seguir o fluxo com **worktrees isolados**.
+
+## Estrutura de Diretórios
+
+```
+/bia (worktree principal - onde o PO trabalha)
+├── .git/                    # Repositório git principal
+├── .worktrees/              # Diretório de worktrees (gitignored)
+│   ├── 007-feat-login/      # Worktree da task 007
+│   ├── 008-fix-bug-api/     # Worktree da task 008
+│   └── 009-feat-dashboard/  # Worktree da task 009
+├── .gitignore               # Contém .worktrees/
+├── .worktreeinclude         # Arquivos para copiar em novos worktrees
+└── .kiro/tasks/
+```
+
+## Fluxo de Criação de Task com Worktree
+
+### 1. PO Cria a Task (No Worktree Principal)
+
+```bash
+# 1.1. Estar no worktree principal e branch base
+cd ~/projetos/bia  # (ou caminho do seu projeto)
+git checkout bia-desafio-agosto
+git pull origin bia-desafio-agosto
+
+# 1.2. Criar arquivo da task
+# (ex: 007-feat-implementar-login.md em .kiro/tasks/)
+
+# 1.3. Atualizar sequencial.md
+# (incrementar para: última task: 007)
+
+# 1.4. Commit da task criada
+git add .kiro/tasks/007-feat-implementar-login.md .kiro/tasks/sequencial.md
+git commit -m "feat: criar task 007 - Implementar Login"
+git push origin bia-desafio-agosto
+
+# 1.5. Criar worktree para a task
+git worktree add -b feature/007-feat-implementar-login .worktrees/007-feat-login bia-desafio-agosto
+
+# 1.6. Verificar criação
+git worktree list
+
+# 1.7. Delegar ao agente responsável
+# Informar: "Task criada. Worktree disponível em .worktrees/007-feat-login"
+```
+
+### 2. Agente Inicia a Task (No Worktree Isolado)
+
+**IMPORTANTE:** O agente deve trabalhar DENTRO do worktree, não no worktree principal.
+
+```bash
+# 2.1. Entrar no worktree da task
+cd .worktrees/007-feat-login
+
+# 2.2. Confirmar que está na branch correta
+git branch --show-current
+# Output esperado: feature/007-feat-implementar-login
+
+# 2.3. Mover task para doing/ (a partir do worktree)
+mv ../../.kiro/tasks/007-feat-implementar-login.md ../../.kiro/tasks/doing/
+
+# 2.4. Commitar movimentação no worktree principal
+cd ../..  # Voltar ao worktree principal temporariamente
+git add .kiro/tasks/doing/007-feat-implementar-login.md
+git commit -m "chore: mover task 007 para doing"
+git push origin bia-desafio-agosto
+
+# 2.5. Voltar ao worktree da task
+cd .worktrees/007-feat-login
+
+# 2.6. Instalar dependências (se necessário)
+npm install
+
+# 2.7. Implementar a feature
+# ... trabalhar aqui ...
+
+# 2.8. Commitar mudanças
+git add .
+git commit -m "feat: implementar tela de login"
+
+# 2.9. Push do branch
+git push origin feature/007-feat-implementar-login
+
+# 2.10. Criar Pull Request
+gh pr create --base bia-desafio-agosto --head feature/007-feat-implementar-login
+
+# 2.11. Informar ao PO que task está pronta
+```
+
+### 3. PO Valida e Faz Merge (No Worktree Principal)
+
+```bash
+# 3.1. Voltar ao worktree principal
+cd ~/projetos/bia
+
+# 3.2. Revisar PR
+gh pr view <numero-pr> --web
+
+# 3.3. Após validação, fazer merge
+gh pr merge <numero-pr> --squash --delete-branch
+
+# 3.4. Atualizar branch base local
+git checkout bia-desafio-agosto
+git pull origin bia-desafio-agosto
+```
+
+### 4. PO Remove Worktree (Após Merge Confirmado)
+
+**CRÍTICO:** Só execute após confirmar que o PR foi mergeado com sucesso.
+
+```bash
+# 4.1. Verificar worktrees existentes
+git worktree list
+
+# 4.2. Remover worktree da task finalizada
+git worktree remove .worktrees/007-feat-login
+
+# 4.3. Se houver erro de mudanças não commitadas, avaliar:
+# - Se são mudanças importantes, commitá-las antes
+# - Se não, forçar remoção: git worktree remove --force .worktrees/007-feat-login
+
+# 4.4. Verificar remoção
+git worktree list
+
+# 4.5. Deletar branch local (se ainda existir)
+git branch -d feature/007-feat-implementar-login
+
+# 4.6. Mover task para done/
+mv .kiro/tasks/doing/007-feat-implementar-login.md .kiro/tasks/done/
+
+# 4.7. Commitar finalização
+git add .kiro/tasks/done/007-feat-implementar-login.md
+git commit -m "chore: finalizar task 007"
+git push origin bia-desafio-agosto
+
+# 4.8. Informar ao usuário que task foi finalizada e worktree removido
+```
+
+## Comandos de Referência Rápida
+
+### Listar Worktrees
+```bash
+git worktree list
+```
+
+### Criar Worktree
+```bash
+git worktree add -b <branch-name> .worktrees/<task-folder> bia-desafio-agosto
+```
+
+### Navegar Entre Worktrees
+```bash
+# Entrar no worktree da task
+cd .worktrees/<task-folder>
+
+# Voltar ao worktree principal
+cd ../..
+```
+
+### Remover Worktree
+```bash
+git worktree remove .worktrees/<task-folder>
+```
+
+### Limpar Worktrees Órfãos
+```bash
+git worktree prune
+```
+
+## Benefícios dos Worktrees
+
+- ✅ **Isolamento:** Cada task em seu próprio diretório
+- ✅ **Produtividade:** Sem stash/unstash, troca instantânea entre tasks
+- ✅ **Segurança:** Worktree principal sempre limpo, menos risco de commitar na branch errada
+- ✅ **Organização:** Fácil identificar tasks em andamento com `git worktree list`
+- ✅ **Trabalho Paralelo:** Múltiplos agentes podem trabalhar simultaneamente
+
+## Troubleshooting
+
+### Erro: "fatal: '<branch>' is already checked out"
+```bash
+# Listar worktrees para ver onde a branch está
+git worktree list
+
+# Remover worktree antigo
+git worktree remove .worktrees/<task-folder>
+```
+
+### Erro: "fatal: '<path>' already exists"
+```bash
+# Remover diretório existente (cuidado!)
+rm -rf .worktrees/<task-folder>
+git worktree add -b <branch> .worktrees/<task-folder> bia-desafio-agosto
+```
+
+### Worktree deletado manualmente
+```bash
+# Limpar referências órfãs
+git worktree prune
+```
+
+---
 
 # Fluxo de Pull Request (Após Finalização da Task)
 
@@ -72,6 +280,7 @@ Task: [XXX]-[tipo]-[resumo].md
 - [ ] Sem conflitos com branch base
 - [ ] Documentação atualizada (se necessário)
 - [ ] Task movida para done/
+- [ ] Worktree removido (a partir da task 007)
 
 ## 🧪 Evidências de Teste
 
@@ -89,9 +298,15 @@ Task: [XXX]-[tipo]-[resumo].md
 - [ ] Deletar a branch feature após merge (opcional, mas recomendado)
 - [ ] Comando: `git branch -d <nome-da-branch>` (local) e `git push origin --delete <nome-da-branch>` (remoto)
 
-## 5. Registro Final
+## 5. Limpeza do Worktree (A partir da Task 007)
+- [ ] Remover worktree: `git worktree remove .worktrees/<task-folder>`
+- [ ] Verificar remoção: `git worktree list`
+- [ ] Limpar referências órfãs (se necessário): `git worktree prune`
+
+## 6. Registro Final
 - [ ] Informar ao usuário que o PR foi criado/mergeado
 - [ ] Fornecer o link do PR para acompanhamento
+- [ ] Confirmar que worktree foi removido (a partir da task 007)
 - [ ] Atualizar status da task (se houver sistema de tracking adicional)
 
 ## ⚠️ Observações Importantes
@@ -101,3 +316,6 @@ Task: [XXX]-[tipo]-[resumo].md
 - Em caso de conflitos, resolva antes de criar o PR
 - Mantenha o histórico limpo usando --squash no merge quando apropriado
 - Se o PR for rejeitado, volte a task para doing/ e comunique os ajustes necessários
+- **A partir da task 007:** Sempre remova o worktree após o merge confirmado
+- **Worktree principal:** PO sempre trabalha em `/bia` (worktree principal)
+- **Worktrees de tasks:** Agentes trabalham em `.worktrees/<task-folder>/`
