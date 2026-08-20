@@ -11,6 +11,9 @@ const Header = ({ title }) => {
     <header className="header">
       <h1>{title}</h1>
       <div className="header-controls">
+        <Link to="/analytics" title="Ver dashboard de tarefas" style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textDecoration: "none" }}>
+          Dashboard
+        </Link>
         <Link to="/versao" title="Ver versão da API" style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textDecoration: "none" }}>
           Versão
         </Link>
