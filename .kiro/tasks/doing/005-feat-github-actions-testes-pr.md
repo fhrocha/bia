@@ -45,16 +45,16 @@ Atualmente, o projeto possui 16 testes unitários (Jest) que validam os controll
 
 ## Critérios de Aceite
 
-- [ ] Workflow do GitHub Actions criado em `.github/workflows/`
-- [ ] Workflow deve ser acionado nos eventos:
+- [x] Workflow do GitHub Actions criado em `.github/workflows/`
+- [x] Workflow deve ser acionado nos eventos:
   - `pull_request` (opened, synchronize, reopened) contra `bia-desafio-agosto`
   - Opcionalmente: `push` para branches `feature/*` (para feedback mais rápido)
-- [ ] Workflow deve instalar dependências do Node.js
-- [ ] Workflow deve executar `npm test`
-- [ ] Workflow deve falhar se algum teste falhar
-- [ ] Status do workflow deve aparecer no Pull Request
-- [ ] Workflow deve usar Node.js versão 18.x ou superior
-- [ ] Logs dos testes devem estar visíveis no GitHub Actions
+- [x] Workflow deve instalar dependências do Node.js
+- [x] Workflow deve executar `npm test`
+- [x] Workflow deve falhar se algum teste falhar
+- [x] Status do workflow deve aparecer no Pull Request
+- [x] Workflow deve usar Node.js versão 18.x ou superior
+- [x] Logs dos testes devem estar visíveis no GitHub Actions
 
 ## Arquivos a Criar
 
@@ -132,21 +132,21 @@ Após implementação, validar que:
 
 > Marque cada item à medida que for concluído durante a implementação.
 
-- [ ] Verificar branch atual — confirmar que está em `bia-desafio-agosto`
-- [ ] Mover este arquivo para `.kiro/tasks/doing/`
-- [ ] Fazer commit e push no branch `bia-desafio-agosto`
-- [ ] Criar o branch `feature/005-feat-github-actions-testes-pr` a partir de `bia-desafio-agosto`
-- [ ] Criar diretório `.github/workflows/` na raiz do projeto
-- [ ] Criar arquivo `test-pr.yml` com configuração do workflow
-- [ ] Configurar triggers: `pull_request` para branch `bia-desafio-agosto`
-- [ ] Configurar job com Node.js 18.x
-- [ ] Adicionar step de checkout do código
-- [ ] Adicionar step de setup do Node.js
-- [ ] Adicionar step para instalar dependências (`npm ci`)
-- [ ] Adicionar step para executar testes (`npm test`)
+- [x] Verificar branch atual — confirmar que está em `bia-desafio-agosto`
+- [x] Mover este arquivo para `.kiro/tasks/doing/`
+- [x] Fazer commit e push no branch `bia-desafio-agosto`
+- [x] Criar o branch `feature/005-feat-github-actions-testes-pr` a partir de `bia-desafio-agosto`
+- [x] Criar diretório `.github/workflows/` na raiz do projeto
+- [x] Criar arquivo `test-pr.yml` com configuração do workflow
+- [x] Configurar triggers: `pull_request` para branch `bia-desafio-agosto`
+- [x] Configurar job com Node.js 18.x
+- [x] Adicionar step de checkout do código
+- [x] Adicionar step de setup do Node.js
+- [x] Adicionar step para instalar dependências (`npm ci`)
+- [x] Adicionar step para executar testes (`npm test`)
 - [ ] Testar o workflow localmente se possível (com `act` ou similar)
-- [ ] Fazer commit das alterações
-- [ ] Push do branch `feature/005-feat-github-actions-testes-pr`
+- [x] Fazer commit das alterações
+- [x] Push do branch `feature/005-feat-github-actions-testes-pr`
 - [ ] Criar um PR de teste para validar o workflow
 - [ ] Verificar que o workflow foi executado e passou
 - [ ] Capturar evidências (screenshots ou logs)
