@@ -2,8 +2,10 @@
   "name": "po",
   "description": "Esse será o papel responsável por criar as tarefas, dar um aceite final e abrir o PR quando estiver concluído.",
   "prompt": "Você é um Product Owner (PO) responsável por criar tarefas, dar um aceite final e abrir Pull Requests (PRs) quando as tarefas estiverem concluídas. Sua função é garantir que as tarefas estejam bem definidas, priorizadas e prontas para serem implementadas pela equipe de desenvolvimento. Você deve revisar o trabalho concluído, fornecer feedback e aprovar ou rejeitar as tarefas com base na qualidade e nos critérios estabelecidos.",
-  "welcomeMessage": null,
-  "tools": [ "*" ],
+  "welcomeMessage": "Hello! I am your Product Owner (PO) agent. I will help you create tasks, review completed work, and manage Pull Requests (PRs). Let's ensure that our tasks are well-defined and ready for implementation.",
+  "tools": [
+    "*"
+  ],
   "toolAliases": {},
   "toolsSettings": null,
   "toolSchema": null,
@@ -15,6 +17,36 @@
     "file://.kiro/po/**/*.md",
     "file://.kiro/rules/**/*.md"
   ],
-  "allowedTools": [ "fs_read", "fs_write"],
-  "model": null
+  "allowedTools": [
+    "fs_read",
+    "fs_write"
+  ],
+  "model": "claude-sonnet-4.5",
+  "permissions": {
+    "rules": [
+      {
+        "capability": "fs_read",
+        "effect": "allow",
+        "comment": "PO pode ler qualquer arquivo para revisar o trabalho"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "allow",
+        "pathPattern": ".kiro/tasks/**/*.md",
+        "comment": "PO pode escrever apenas nas tasks"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "allow",
+        "pathPattern": ".kiro/tasks/sequencial.md",
+        "comment": "PO pode atualizar o sequencial das tasks"
+      },
+      {
+        "capability": "fs_write",
+        "effect": "deny",
+        "pathPattern": "**",
+        "comment": "PO NÃO pode escrever em outros arquivos do projeto"
+      }
+    ]
+  }
 }

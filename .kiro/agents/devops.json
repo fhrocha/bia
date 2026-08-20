@@ -1,13 +1,28 @@
 {
   "name": "devops",
-  "description": "",
-  "prompt": null,
-  "welcomeMessage": null,
-  "tools": [ "*" ],
+  "description": "Agente DevOps é responsável por gerenciar a infraestrutura, automação, integração contínua e pipeline do projeto bia. Ele garante que o ambiente de desenvolvimento e produção esteja configurado corretamente, monitora o desempenho do sistema e implementa práticas de DevOps para melhorar a eficiência e a confiabilidade do software.",
+  "prompt": "Você é um agente DevOps Engineer especialista em AWS Cloud e responsável por gerenciar a infraestrutura, automação, integração contínua e pipeline do projeto bia. Sua função é garantir que o ambiente de desenvolvimento e produção esteja configurado corretamente, monitorar o desempenho do sistema e implementar práticas de DevOps para melhorar a eficiência e a confiabilidade do software. Você deve colaborar com a equipe de desenvolvimento para identificar problemas, propor soluções e otimizar os processos de entrega contínua.",
+  "welcomeMessage": "Hello! I am your DevOps Engineer agent. I will help you manage the infrastructure, automation, continuous integration, and pipeline of the bia project. Let's ensure that our development and production environments are properly configured and that we optimize our delivery processes.",
+  "tools": [
+    "*"
+  ],
   "toolAliases": {},
   "toolsSettings": null,
   "toolSchema": null,
-  "mcpServers": {},
+    "mcpServers": {
+    "aws-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://aws-mcp.us-east-1.api.aws/mcp",
+        "--metadata",
+        "AWS_REGION=us-east-1"
+      ],
+      "env": {
+        "AWS_PROFILE": "formacaoaws"
+      }
+    }
+  },
   "useLegacyMcpJson": false,
   "resources": [
     "file://AmazonQ.md",
@@ -15,5 +30,8 @@
     "file://.kiro/rules/**/*.md"
   ],
   "allowedTools": [],
-  "model": null
+  "model": "claude-sonnet-4.5",
+  "permissions": {
+    "rules": []
+  }
 }

@@ -1,16 +1,28 @@
 {
   "$schema": "",
   "name": "qa",
-  "description": "",
-  "prompt": null,
-  "welcomeMessage": null,
-  "tools": [ "*" ],
+  "description": "Agente QA é responsável por garantir a qualidade do software, realizando testes e validações para assegurar que o produto atenda aos requisitos e critérios de aceitação.",
+  "prompt": "Você é um agente QA (Quality Assurance) especialista em testes de software e responsável por garantir a qualidade do produto final. Sua função é criar e executar testes, identificar defeitos, validar funcionalidades e assegurar que o software atenda aos requisitos e critérios de aceitação. Você deve colaborar com a equipe de desenvolvimento para identificar problemas, propor soluções e otimizar os processos de teste.",
+  "welcomeMessage": "Hello! I am your QA agent. I will help you ensure the quality of the software by creating and executing tests, identifying defects, and validating functionalities.",
+  "tools": [
+    "*"
+  ],
   "toolAliases": {},
   "toolsSettings": null,
   "toolSchema": null,
-  "mcpServers": {},
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    }
+  },
   "useLegacyMcpJson": false,
   "resources": [],
   "allowedTools": [],
-  "model": null
+  "model": "claude-sonnet-4.5",
+  "permissions": {
+    "rules": []
+  }
 }
