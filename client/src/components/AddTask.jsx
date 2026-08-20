@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Modal from "./Modal";
 
 const AddTask = ({ onAdd }) => {
   const [titulo, setTitulo] = useState("");
-  const [dia, setDia] = useState("");
+  const [dia, setDia] = useState(new Date());
   const [importante, setImportante] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
@@ -15,14 +17,17 @@ const AddTask = ({ onAdd }) => {
       return;
     }
 
+    // Converter Date para string no formato dd/mm/yyyy
+    const dataFormatada = dia ? dia.toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+
     onAdd({ 
       titulo: titulo.trim(), 
-      dia_atividade: dia || new Date().toLocaleDateString('pt-BR'), 
+      dia_atividade: dataFormatada, 
       importante 
     });
 
     setTitulo("");
-    setDia("");
+    setDia(new Date());
     setImportante(true);
   };
 
@@ -40,11 +45,12 @@ const AddTask = ({ onAdd }) => {
       
       <div className="form-control">
         <label>Data/Prazo</label>
-        <input
-          type="text"
-          placeholder="Quando?"
-          value={dia}
-          onChange={(e) => setDia(e.target.value)}
+        <DatePicker
+          selected={dia}
+          onChange={(date) => setDia(date)}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Selecione uma data"
+          className="date-picker-input"
         />
       </div>
       
