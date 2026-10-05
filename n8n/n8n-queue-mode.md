@@ -215,7 +215,7 @@ Aplicar em **ambas** as task definitions: `task-def-n8n-main` e `task-def-n8n-wo
 |---|---|
 | Domínio | *.bia-aws.com.br |
 | Status | ✅ ISSUED — já existe, não recriar |
-| ARN | arn:aws:acm:us-east-1:310189683227:certificate/9c154648-89a1-458a-b078-606d31dabcd5 |
+| ARN | arn:aws:acm:us-east-1:SEU_ACCOUNT_ID:certificate/SEU_CERTIFICATE_ID |
 
 ---
 
@@ -400,7 +400,7 @@ Aplicar em **ambas** as task definitions: `task-def-n8n-main` e `task-def-n8n-wo
 
 | Item | Valor |
 |---|---|
-| Hosted Zone | bia-aws.com.br (ID: Z00684123Q7EMJ9D1M9I) — já existe |
+| Hosted Zone | bia-aws.com.br (ID: SEU_HOSTED_ZONE_ID) — já existe |
 | Record | n8n.bia-aws.com.br |
 | Type | A (Alias) |
 | Target | ALB DNS Name |
