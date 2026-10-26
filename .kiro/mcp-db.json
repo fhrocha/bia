@@ -6,11 +6,9 @@
         "--with",
         "mcp<2",
         "postgres-mcp",
-        "--access-mode=unrestricted"
+        "postgresql://postgres:postgres@localhost:5433/bia"
       ],
-      "env": {
-        "DATABASE_URI": "postgresql://postgres:postgres@localhost:5433/bia"
-      }
+      "env": {}
     }
   }
 }
