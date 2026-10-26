@@ -44,4 +44,6 @@ App educacional (Formação AWS): backend Node/Express na raiz, frontend React+V
   `.harness/guardrails/politicas.md`).
 - Prompts reutilizáveis em `.harness/prompts/` (ex.: `executar-projeto.md`,
   que referencia `CLAUDE.md` e `AmazonQ.md`).
+- Agente BIA do opencode: `.opencode/agent/bia.md`, com prompt canônico em
+  `.harness/prompts/bia.md` e registro em `.harness/tools/bia.md`.
 - Regras a serem utilizadas (ver `.harness/guardrails/politicas.md`)
