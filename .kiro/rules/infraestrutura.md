@@ -39,6 +39,7 @@
 - **Service:** `service-bia-alb` (com alb)
 
 ### Configuração do Container (Task Definition)
+- **Memory Hard Limit:** 800 MB
 - **Memory Soft Limit:** 400 MB
 - **CPU:** 1 vCPU (1024 units)
 - **Nota:** Configuração na área do container, NÃO na parte de Fargate/Task size
@@ -76,6 +77,9 @@
 - **Cluster:** `cluster-bia-app`
 - **Serviço da aplicação:** `service-bia-app`
 - **Serviço de cache:** `service-bia-cache`
+- **Task definition de aplicação:** `task-def-bia-app`
+- **Task definition de cache:** `task-def-bia-cache`
+
 
 ### Network Mode (Cenário 3)
 - **Modo:** `awsvpc` — cada task recebe ENI própria com IP privado dedicado
@@ -190,10 +194,18 @@
 - Sempre retorna a AMI mais recente disponível na região sem depender de filtros
 
 ## Banco de Dados
-- **Aproveitamento:** Usar banco existente na infraestrutura
-- **Não criar:** Novos recursos RDS nos templates
+- **Aproveitamento:** Usar PREFERENCIALMENTE banco existente na infraestrutura, senão DEVERÁ ser criado
 - **Security Group:** Manter `bia-db` preparado para conexão
-
+- **Nome do banco**: bia
+- **Engine type**: PostgreSQL
+- **Templates**: Sandbox
+- **Availability and durability**: Single-AZ DB instance deployment (1 instance)
+- **Credentials Management**: Self managed
+- **Instance type**: db.t4g.micro
+- **Storage type**: General Purpose SSD gp3
+- **Allocated storage**: 20 GiB
+- **Compute resource**: Don't connect to an EC2 compute resource
+- **Public access**: No
 ### Observações
 - As regras seguem o princípio de menor privilégio
 - Security Groups referenciam outros Security Groups para maior flexibilidade
