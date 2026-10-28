@@ -223,7 +223,7 @@
 - **Engine**: Valkey
 - **Deployment option**: Node-based cluster
 - **Creation Method**: Easy create
-- **Configuration**: Demo
+- **Configuration**: Demo cache.t4g.micro 0.5GiB memory
 - **Cluster info name**: bia-cache
 - **Subnet Groups name**: subnet-group-zona-a-b
 - **VPC id**: default
