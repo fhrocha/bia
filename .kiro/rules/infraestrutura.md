@@ -7,7 +7,7 @@
 ## Tipos de Instância
 - **RDS (Database):** t3.micro
 - **EC2 (ECS Cluster) — Cenário 1 e 2:** t3.micro
-- **EC2 (ECS Cluster) — Cenário 3 (awsvpc):** t3.small (necessário por conta do limite de ENIs no modo awsvpc)
+- **EC2 (ECS Cluster) — Cenário 3 e 4 (awsvpc):** t3.small (necessário por conta do limite de ENIs no modo awsvpc)
 
 ## Filosofia de Simplicidade
 - **Público-alvo:** Alunos em aprendizado
@@ -73,6 +73,12 @@
 - **Serviço da aplicação (ECS):** `bia-app`
 - **Serviço de cache (ECS):** `bia-cache`
 
+#### Cenário 4: Com ALB + AWS ElastiCache (Evolução com Cache)
+- **Database (RDS):** `bia-db`
+- **Application Load Balancer:** `bia-alb`
+- **EC2 (ECS Cluster):** `bia-cluster`
+- **Serviço da aplicação (ECS):** `bia-app`
+
 ## Nomenclatura de Serviços ECS (Cenário 3: Com ALB + Cache)
 - **Cluster:** `cluster-bia-app`
 - **Serviço da aplicação:** `service-bia-app`
@@ -80,8 +86,12 @@
 - **Task definition de aplicação:** `task-def-bia-app`
 - **Task definition de cache:** `task-def-bia-cache`
 
+## Nomenclatura de Serviços ECS (Cenário 4: Com ALB + ElastiCache)
+- **Cluster:** `cluster-bia-app`
+- **Serviço da aplicação:** `service-bia-app`
+- **Task definition de aplicação:** `task-def-bia-app`
 
-### Network Mode (Cenário 3)
+### Network Mode (Cenário 3 e Cenário 4)
 - **Modo:** `awsvpc` — cada task recebe ENI própria com IP privado dedicado
 - **Impacto:** Security Groups aplicados diretamente na ENI da task, não na EC2
 - **EC2 (bia-cluster):** inbound vazio — controle de acesso é feito nos SGs das tasks
@@ -118,12 +128,12 @@
 **Inbound Rules:** nenhuma — controle de acesso feito nos SGs das tasks via awsvpc
 **Outbound:** `0.0.0.0/0`
 
-### Serviço da aplicação (bia-app) — Cenário 3
+### Serviço da aplicação (bia-app) — Cenário 3 e Cenário 4
 **Inbound Rules:**
 - **Porta:** 8080
 - **Source:** `bia-alb` → Descrição: "acesso vindo de bia-alb"
 
-### Serviço de cache (bia-cache) — Cenário 3
+### Serviço de cache (bia-cache) — Cenário 3 e Cenário 4
 **Inbound Rules:**
 - **Porta:** 6379 (Redis)
 - **Source:** `bia-app` → Descrição: "acesso vindo de bia-app"
@@ -206,6 +216,23 @@
 - **Allocated storage**: 20 GiB
 - **Compute resource**: Don't connect to an EC2 compute resource
 - **Public access**: No
+- **Backup**: No
+
+## ElastiCache
+- **Resources**: Valkey
+- **Engine**: Valkey
+- **Deployment option**: Node-based cluster
+- **Creation Method**: Easy create
+- **Configuration**: Demo
+- **Cluster info name**: bia-cache
+- **Subnet Groups name**: subnet-group-zona-a-b
+- **VPC id**: default
+- **Subnets**: a, b
+- **Aftear creation change security group to**: bia-cache
+
+## Instâncias EC2 utilizadas no cluster ECS
+- **Solução obrigatória**: Provisionar duas instâncias via Auto Scaling Group. Caso seja necessário mais instâncias SEMPRE INFORMAR antes de provisionar.
+
 ### Observações
 - As regras seguem o princípio de menor privilégio
 - Security Groups referenciam outros Security Groups para maior flexibilidade
