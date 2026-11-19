@@ -24,7 +24,7 @@ set -euo pipefail
 # ─── Configuração ────────────────────────────────────────────────────────────
 REGION="${REGION:-us-east-1}"
 CLUSTER="${CLUSTER:-cluster-bia}"
-SERVICE="${SERVICE:-service-bia}"
+SERVICE="${SERVICE:-service-bia-alb}"
 CONTAINER="${CONTAINER:-bia}"
 REPO="${REPO:-bia-repo}"
 
