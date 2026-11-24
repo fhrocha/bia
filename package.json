@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/henrylle/bia#readme",
   "dependencies": {
+    "dd-trace": "^5.26.0",
     "@aws-sdk/client-secrets-manager": "^3.583.0",
     "@aws-sdk/client-sts": "^3.583.0",
     "@aws-sdk/credential-providers": "^3.583.0",
